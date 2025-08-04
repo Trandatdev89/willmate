@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: will-mate-backend
+
+gremlin:
+  endpoint: localhost
+  port: 8182
+  protocol: ws
