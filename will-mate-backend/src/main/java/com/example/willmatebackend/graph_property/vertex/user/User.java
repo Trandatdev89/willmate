@@ -1,4 +1,4 @@
-package com.example.willmatebackend.graph_property.user;
+package com.example.willmatebackend.graph_property.vertex.user;
 
 public class User {
     public static final String ID="id";

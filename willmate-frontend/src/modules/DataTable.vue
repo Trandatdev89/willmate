@@ -10,19 +10,30 @@
   @selection-change="handleSelectChange"
   :header-cell-style="headerCellStyle"
   :header-row-style="headerRowStyle"
-  @sortChange="$emit('sort-change',$event)">
-
+  >
+     <slot></slot>
   </el-table>
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue'
+  import { onMounted, ref } from 'vue'
+  import type { User } from '@/common/typeData.ts'
 
   const tableRef = ref(null);
 
   const loading = ref<boolean>(false);
 
-  const data = ref([]);
+  const data = ref<User[]>([]);
+
+  const emit = defineEmits(["sort-change"]);
+
+  const currentPage = ref<number>(1);
+  const totalPage = ref<number>(1);
+  const totalElement = ref<number>(0);
+  const size = ref<number>(3);
+  const selectedRows = ref([]);
+  const propSort = ref<string>("");
+  const orderSort = ref("descending");
 
   const props = defineProps({
     getDataFunction:{
@@ -43,19 +54,40 @@
     }
   });
 
-  const onSortChange=()=>{
-
+  const onSortChange=(sort:{prop:string,order:string})=>{
+    propSort.value = sort.prop;
+    orderSort.value = sort.order;
+    emit('sort-change',{propSort,orderSort});
   }
 
-  const  handleSelectChange=()=>{
-
+  const  handleSelectChange=(val: any[])=>{
+      console.log(val)
   }
 
-  const getData = async ()=>{
+  const getData = ()=>{
     const request={
-      page:
-    }
+      page: currentPage.value,
+      size: size.value
+    };
+    loading.value = true;
+    const  res = props.getDataFunction(request);
+    data.value = res.value;
+    loading.value = false;
   }
+
+  const testOne =()=>{
+    console.log("hello world")
+  }
+
+  const reload =()=>{
+
+  }
+
+  onMounted(()=>{
+    getData();
+  })
+
+  defineExpose({getData,selectedRows,reload,testOne})
 
 </script>
 
