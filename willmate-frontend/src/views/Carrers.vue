@@ -1,10 +1,12 @@
+<template>
+  <Common :allTab="allTab"></Common>
+</template>
+
 <script setup lang="ts">
+  import Common from '@/views/Common.vue'
+
 
 </script>
-
-<template>
-    <div>This is Carrers Page</div>
-</template>
 
 <style scoped lang="scss">
 
