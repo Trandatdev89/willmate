@@ -32,7 +32,7 @@ const router = createRouter({
       path: '/carrers',
       name: 'carrers',
       component: Carrers,
-    }
+    },
   ],
 })
 
